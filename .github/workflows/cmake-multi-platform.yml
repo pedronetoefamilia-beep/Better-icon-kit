@@ -1,0 +1,31 @@
+#include <Geode/Geode.hpp>
+#include <Geode/modify/MenuLayer.hpp>
+
+using namespace geode::prelude;
+
+class $modify(CustomMenuLayer, MenuLayer) {
+    bool init() {
+        if (!MenuLayer::init()) return false;
+
+        auto button = CCMenuItemSpriteExtra::create(
+            ButtonSprite::create("My Mod"),
+            this,
+            menu_selector(CustomMenuLayer::onMyMod)
+        );
+
+        auto menu = CCMenu::create();
+        menu->addChild(button);
+        menu->setPosition({100, 100});
+        this->addChild(menu);
+
+        return true;
+    }
+
+    void onMyMod(CCObject*) {
+        FLAlertLayer::create(
+            "My Custom Mod",
+            "Welcome to my custom menu!",
+            "OK"
+        )->show();
+    }
+};
